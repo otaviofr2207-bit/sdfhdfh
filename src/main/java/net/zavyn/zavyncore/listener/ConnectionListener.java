@@ -102,7 +102,7 @@ public final class ConnectionListener {
                 }
 
                 java.util.concurrent.CompletableFuture<AccountLimitService.LimitResult> limitCheck = ip == null
-                        ? java.util.concurrent.CompletableFuture.completedFuture(AccountLimitService.LimitResult.allowed())
+                        ? java.util.concurrent.CompletableFuture.completedFuture(AccountLimitService.LimitResult.permitted())
                         : accountLimitService.checkAndRegister(uuid, accountType, ip, bypassLimit);
 
                 return limitCheck.thenAccept(limitResult -> {
