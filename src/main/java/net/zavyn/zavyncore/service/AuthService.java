@@ -59,7 +59,7 @@ public final class AuthService {
                 playerDao.setLoggedIn(uuid, true);
                 loggedInCache.put(uuid, true);
                 logDao.log(account.get().name(), "REGISTER", account.get().name(), null);
-                return AuthResult.success();
+                return AuthResult.ok();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
@@ -82,7 +82,7 @@ public final class AuthService {
                 playerDao.updateLastConfirmation(uuid, System.currentTimeMillis());
                 loggedInCache.put(uuid, true);
                 logDao.log(account.get().name(), "LOGIN", account.get().name(), null);
-                return AuthResult.success();
+                return AuthResult.ok();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -105,7 +105,7 @@ public final class AuthService {
                 String hash = PasswordUtil.hash(newPassword);
                 playerDao.setPasswordHash(uuid, hash);
                 logDao.log(account.get().name(), "CHANGEPASSWORD", account.get().name(), null);
-                return AuthResult.success();
+                return AuthResult.ok();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -124,7 +124,7 @@ public final class AuthService {
                 playerDao.setLoggedIn(targetUuid, false);
                 loggedInCache.remove(targetUuid);
                 logDao.log(staffName, "SETPASSWORD", targetName, null);
-                return AuthResult.success();
+                return AuthResult.ok();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -145,7 +145,7 @@ public final class AuthService {
                 playerDao.setLoggedIn(uuid, false);
                 loggedInCache.remove(uuid);
                 logDao.log(account.get().name(), "UNREGISTER", account.get().name(), null);
-                return AuthResult.success();
+                return AuthResult.ok();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -162,7 +162,7 @@ public final class AuthService {
     }
 
     public record AuthResult(boolean success, String errorMessage) {
-        public static AuthResult success() { return new AuthResult(true, null); }
+        public static AuthResult ok() { return new AuthResult(true, null); }
         public static AuthResult failure(String message) { return new AuthResult(false, message); }
     }
 }
