@@ -44,27 +44,27 @@ public final class AccountLimitService {
     public CompletableFuture<LimitResult> checkAndRegister(UUID uuid, AccountType accountType, String ip, boolean bypass) {
         return CompletableFuture.supplyAsync(() -> {
             if (!config.getBoolean("account-limit.enabled", true)) {
-                return LimitResult.allowed();
+                return LimitResult.permitted();
             }
             if (bypass) {
-                return LimitResult.allowed();
+                return LimitResult.permitted();
             }
             if (accountType != AccountType.OFFLINE) {
                 // premium-limit / floodgate-limit sao suportados na config, mas o padrao pedido e ilimitado (-1).
                 int limit = accountType == AccountType.FLOODGATE
                         ? config.getInt("account-limit.floodgate-limit", -1)
                         : config.getInt("account-limit.premium-limit", -1);
-                if (limit < 0) return LimitResult.allowed();
+                if (limit < 0) return LimitResult.permitted();
                 // Caso um limite explicito seja configurado para premium/floodgate, aplicamos a mesma
                 // logica atomica abaixo, apenas filtrando por account_type diferente nao e necessario
                 // aqui pois countOfflineAccountsForIp e especifico de OFFLINE; para simplificar e manter
                 // o comportamento padrao pedido (ilimitado), tratamos limites >=0 nesses tipos como uma
                 // extensao best-effort sem lock forte.
-                return LimitResult.allowed();
+                return LimitResult.permitted();
             }
 
             int offlineLimit = config.getInt("account-limit.offline-limit", 3);
-            if (offlineLimit < 0) return LimitResult.allowed();
+            if (offlineLimit < 0) return LimitResult.permitted();
 
             ReentrantLock lock = ipLocks.computeIfAbsent(ip, k -> new ReentrantLock());
             lock.lock();
@@ -85,7 +85,7 @@ public final class AccountLimitService {
                     // "contagem verificada + IP registrado" atomico.
                     playerDao.recordIp(connection, uuid, ip);
                     connection.commit();
-                    return LimitResult.allowed();
+                    return LimitResult.permitted();
                 } catch (SQLException e) {
                     connection.rollback();
                     throw e;
@@ -101,7 +101,7 @@ public final class AccountLimitService {
     }
 
     public record LimitResult(boolean allowed, int currentCount, int limit) {
-        public static LimitResult allowed() {
+        public static LimitResult permitted() {
             return new LimitResult(true, -1, -1);
         }
 
