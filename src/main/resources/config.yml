@@ -1,0 +1,52 @@
+# =========================================================
+#  ZavynCore - configuracao principal
+#  Rede: Zavyn | Proxy: Velocity 4.1.0-SNAPSHOT
+# =========================================================
+
+database:
+  type: mysql
+  host: localhost
+  port: 3306
+  database: zavyncore
+  username: root
+  password: ""
+  pool:
+    maximum-pool-size: 10
+
+account-limit:
+  enabled: true
+  # Numero maximo de contas OFFLINE distintas que podem conectar do mesmo IP.
+  # Contas premium e floodgate NUNCA entram nesta contagem.
+  offline-limit: 3
+  # Mantidos para configuracao futura - o padrao pedido e ilimitado (-1).
+  premium-limit: -1
+  floodgate-limit: -1
+
+authentication:
+  premium-auto-login: true
+  floodgate-auto-login: true
+  offline-require-login: true
+
+new-ip:
+  enabled: true
+  require-confirmation: true
+
+security:
+  # Formato: numero + unidade (s, m, h, d, w, mo). Ex: 3d, 12h, 1w.
+  confirmation-interval: 3d
+  require-confirmation-on-new-ip: true
+
+punishment:
+  # Se true, ao banir uma conta o IP atual dela tambem e banido automaticamente.
+  ban-also-ip: false
+
+# Acoes automaticas por quantidade total de warns.
+# Formato: "<numero_de_warns>: <acao>[:<duracao>]"
+# Acoes suportadas: mute, tempban, ban, kick
+warnings:
+  auto-actions:
+    "3": "mute:1d"
+    "5": "tempban:7d"
+
+messages:
+  prefix: "<aqua>[Zavyn]</aqua>"

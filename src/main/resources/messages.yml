@@ -1,0 +1,137 @@
+# =========================================================
+#  ZavynCore - mensagens (formato MiniMessage)
+#  Placeholders disponiveis variam por mensagem: {player} {reason} {duration}
+#  {expires} {punishment_id} {server} {ip} {remaining} {staff} {total} {error} etc.
+# =========================================================
+
+prefix: "<aqua>[Zavyn]</aqua>"
+
+defaults:
+  no-reason: "Nao especificado"
+
+errors:
+  player-not-found: "<red>Jogador {player} nunca foi visto neste servidor.</red>"
+  player-not-online: "<red>{player} nao esta online.</red>"
+  players-only: "<red>Apenas jogadores podem usar este comando.</red>"
+  invalid-duration: "<red>Duracao invalida. Use por exemplo: 30m, 2h, 7d, 1mo.</red>"
+  tempban-needs-duration: "<red>Voce precisa informar uma duracao para o tempban.</red>"
+  database: "<red>Erro interno ao acessar o banco de dados. Tente novamente.</red>"
+
+usage:
+  ban: "<yellow>Uso: /ban <jogador> [duracao] [motivo]</yellow>"
+  tempban: "<yellow>Uso: /tempban <jogador> <duracao> [motivo]</yellow>"
+  unban: "<yellow>Uso: /unban <jogador></yellow>"
+  banip: "<yellow>Uso: /banip <ip> [motivo]</yellow>"
+  unbanip: "<yellow>Uso: /unbanip <ip></yellow>"
+  checkban: "<yellow>Uso: /checkban <jogador></yellow>"
+  history: "<yellow>Uso: /history <jogador></yellow>"
+  mute: "<yellow>Uso: /mute <jogador> [duracao] [motivo]</yellow>"
+  tempmute: "<yellow>Uso: /tempmute <jogador> <duracao> [motivo]</yellow>"
+  unmute: "<yellow>Uso: /unmute <jogador></yellow>"
+  checkmute: "<yellow>Uso: /checkmute <jogador></yellow>"
+  kick: "<yellow>Uso: /kick <jogador> [motivo]</yellow>"
+  warn: "<yellow>Uso: /warn <jogador> [motivo]</yellow>"
+  warnings: "<yellow>Uso: /warnings <jogador></yellow>"
+  clearwarnings: "<yellow>Uso: /clearwarnings <jogador></yellow>"
+  register: "<yellow>Uso: /register <senha> <senha></yellow>"
+  login: "<yellow>Uso: /login <senha></yellow>"
+  changepassword: "<yellow>Uso: /changepassword <senha_antiga> <senha_nova></yellow>"
+  unregister: "<yellow>Uso: /unregister <senha></yellow>"
+  setpassword: "<yellow>Uso: /setpassword <jogador> <nova_senha></yellow>"
+  resetpassword: "<yellow>Uso: /resetpassword <jogador></yellow>"
+  accounts: "<yellow>Uso: /accounts <jogador></yellow>"
+  ipaccounts: "<yellow>Uso: /ipaccounts <ip></yellow>"
+  alts: "<yellow>Uso: /alts <jogador></yellow>"
+  zavyncore: "<yellow>Uso: /zavyncore <reload|info|debug|database|version></yellow>"
+
+ban:
+  success: "<green>{player} foi banido. Motivo: {reason} | Duracao: {duration} | ID: {punishment_id}</green>"
+  permanent: "<red>Voce foi banido permanentemente!\n<gray>Motivo: <white>{reason}</white>\nID: <white>{punishment_id}</white></gray>"
+  temporary: "<red>Voce foi banido temporariamente!\n<gray>Motivo: <white>{reason}</white>\nExpira em: <white>{duration}</white>\nID: <white>{punishment_id}</white></gray>"
+  ip-banned: "<red>Este IP ({ip}) esta banido da rede Zavyn.</red>"
+
+unban:
+  success: "<green>{player} foi desbanido.</green>"
+  not-banned: "<red>{player} nao possui um ban ativo.</red>"
+
+banip:
+  success: "<green>IP {ip} banido. Motivo: {reason}</green>"
+
+unbanip:
+  success: "<green>IP {ip} desbanido.</green>"
+  not-banned: "<red>O IP {ip} nao esta banido.</red>"
+
+checkban:
+  banned: "<yellow>{player} esta banido. Motivo: {reason} | Duracao: {duration} | Staff: {staff} | ID: {punishment_id}</yellow>"
+  not-banned: "<green>{player} nao esta banido.</green>"
+
+history:
+  header: "<aqua>Historico de {player}:</aqua>"
+  entry: "<gray>[{punishment_id}] {type} - {reason} (staff: {staff}, restante: {duration}, status: {status})</gray>"
+  empty: "<green>{player} nao possui nenhuma punicao registrada.</green>"
+
+mute:
+  success: "<green>{player} foi mutado. Motivo: {reason} | Duracao: {duration} | ID: {punishment_id}</green>"
+  permanent: "<red>Voce esta mutado permanentemente. Motivo: {reason}</red>"
+  temporary: "<red>Voce esta mutado. Motivo: {reason} | Expira em: {duration}</red>"
+
+unmute:
+  success: "<green>{player} foi desmutado.</green>"
+  not-muted: "<red>{player} nao esta mutado.</red>"
+
+checkmute:
+  muted: "<yellow>{player} esta mutado. Motivo: {reason} | Duracao: {duration} | Staff: {staff} | ID: {punishment_id}</yellow>"
+  not-muted: "<green>{player} nao esta mutado.</green>"
+
+kick:
+  message: "<red>Voce foi expulso do servidor.\n<gray>Motivo: <white>{reason}</white></gray>"
+  success: "<green>{player} foi expulso. Motivo: {reason}</green>"
+
+warn:
+  success: "<yellow>{player} recebeu um warn. Motivo: {reason} | Total: {total}</yellow>"
+  auto-action: "<gold>Acao automatica aplicada a {player}: {action}</gold>"
+
+warnings:
+  header: "<aqua>Warnings de {player} ({total} total):</aqua>"
+  entry: "<gray>- {reason} (staff: {staff}, em: {date})</gray>"
+  empty: "<green>{player} nao possui warnings.</green>"
+
+clearwarnings:
+  success: "<green>Warnings de {player} foram limpos.</green>"
+
+account-limit:
+  denied: "<red>Limite de contas por IP atingido (maximo: {limit}). Nao foi possivel entrar.</red>"
+
+auth:
+  register-success: "<green>Conta registrada com sucesso! Voce esta logado.</green>"
+  register-failed: "<red>Falha ao registrar: {error}</red>"
+  login-success: "<green>Login efetuado com sucesso!</green>"
+  login-failed: "<red>Falha ao entrar: {error}</red>"
+  changepassword-success: "<green>Senha alterada com sucesso.</green>"
+  changepassword-failed: "<red>Falha ao alterar senha: {error}</red>"
+  unregister-success: "<green>Conta desregistrada com sucesso.</green>"
+  unregister-failed: "<red>Falha ao desregistrar: {error}</red>"
+  unregister-disconnect: "<gray>Sua conta foi desregistrada. Conecte novamente para criar uma nova senha.</gray>"
+  logout-success: "<green>Voce saiu da sua sessao. Use /login para entrar novamente.</green>"
+  setpassword-success: "<green>Senha de {player} redefinida com sucesso.</green>"
+  setpassword-failed: "<red>Falha ao redefinir senha de {player}: {error}</red>"
+  resetpassword-success: "<green>Nova senha de {player}: <white>{new_password}</white> (envie com seguranca e peca para trocar em seguida).</green>"
+  resetpassword-failed: "<red>Falha ao resetar senha de {player}: {error}</red>"
+  chat-blocked: "<red>Voce precisa fazer /login antes de poder falar no chat.</red>"
+
+accounts:
+  result: "<yellow>Contas relacionadas a {player}: {accounts}</yellow>"
+
+ipaccounts:
+  result: "<yellow>Contas usando o IP {ip}: {accounts}</yellow>"
+
+alts:
+  result: "<yellow>Possiveis contas alternativas de {player}: {accounts}</yellow>"
+
+zavyncore:
+  reload-success: "<green>Configuracao do ZavynCore recarregada.</green>"
+  version: "<aqua>ZavynCore versao {version}</aqua>"
+  info: "<aqua>ZavynCore {version} | Jogadores: {players} | Servidores: {servers} | Floodgate: {floodgate}</aqua>"
+  debug: "<gray>Online-mode: {online-mode} | Floodgate: {floodgate} | Servidores: {servers}</gray>"
+  database-ok: "<green>Conexao com o banco de dados OK.</green>"
+  database-fail: "<red>Falha na conexao com o banco de dados. Verifique o console.</red>"
